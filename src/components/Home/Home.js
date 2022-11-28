@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import TweetCardTemp from "../tweetCard/tweetCard";
+import './Home.css';
 
 class Home extends Component {
   constructor(props) {
@@ -88,8 +89,13 @@ class Home extends Component {
             );
           })}
         </div>
-        <div>
+        <div class="tweetContainer">
+          <div class="map">
+             Here we will display our map from where we will retrieve our content
+          </div>
+          <div class="tweetCard">
           <TweetCardTemp />
+          </div>
         </div>
       </div>
     );
