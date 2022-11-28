@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import TweetCard from "../tweetCard/tweetCard";
+import TweetCardTemp from "../tweetCard/tweetCard";
 
 class Home extends Component {
   constructor(props) {
@@ -88,7 +88,9 @@ class Home extends Component {
             );
           })}
         </div>
-        <TweetCard />
+        <div>
+          <TweetCardTemp />
+        </div>
       </div>
     );
   }
