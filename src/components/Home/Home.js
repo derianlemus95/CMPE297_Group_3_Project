@@ -95,7 +95,17 @@ class Home extends Component {
           </div>
           <div class="tweetCard">
           <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
+          <TweetCardTemp />
           </div>
+          
         </div>
       </div>
     );
