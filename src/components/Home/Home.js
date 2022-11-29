@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import TweetCardTemp from "../tweetCard/tweetCard";
+import "./Home.css";
+import TweetCard from "react-tweet-card";
 
 class Home extends Component {
   constructor(props) {
@@ -68,6 +71,8 @@ class Home extends Component {
   //}
 
   render() {
+    let username = [];
+
     return (
       <div>
         <h4>ENTER COORDINATES AND THE PROGRAM WILL RETURN TOP 10 TWEETS</h4>
@@ -143,30 +148,28 @@ class Home extends Component {
           {this.state.tweets.map((tweet) => {
             return (
               <div>
-                <p>
-                  <b>DATE: </b>
-                  {tweet.date}
-                </p>
-
-                <p>
-                  <b>USER PROFILE INFO: </b>
-                  {tweet.user}
-                </p>
-                <p>
-                  <b>TWEET: </b>
-                  {tweet.rawContent}
-                </p>
-                <p>
-                  <b>LIKES: </b>
-                  {tweet.likeCount}
-                </p>
-                <p>
-                  <b>RETWEETS: </b> {tweet.retweetCount}
-                </p>
-                <p>
-                  {" "}
-                  <b>REPLIES: </b> {tweet.replyCount}
-                </p>
+                <br />
+                <div class="tweetContainer">
+                  <div class="tweetCard">
+                    <TweetCard
+                      engagement={{
+                        replies: tweet.replyCount,
+                        retweets: tweet.retweetCount,
+                        likes: tweet.likeCount,
+                      }}
+                      author={{
+                        name: "Elon Musk",
+                        username: "realElon",
+                        image: "https://twitter.com/elonmusk/photo",
+                      }}
+                      tweet={tweet.renderedContent}
+                      time={new Date(tweet.date)}
+                      source={tweet.sourceLabel}
+                      permalink="https://twitter.com/randyfactory/status/1366841622495961091" // optional
+                      fitInsideContainer
+                    />
+                  </div>
+                </div>
               </div>
             );
           })}
