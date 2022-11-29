@@ -8,7 +8,7 @@ class Navbar extends Component {
     return (
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/home">
             Cal Tweets
           </a>
           <button
@@ -24,8 +24,8 @@ class Navbar extends Component {
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link active" href="/home">
-                Home
+              <a class="nav-item nav-link active" href="/map">
+                Map
               </a>
             </div>
           </div>

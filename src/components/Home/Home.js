@@ -9,9 +9,14 @@ class Home extends Component {
       tweets: [],
       longitude: "-121.9",
       latitude: "37.3333",
+      selectedOption: "likes",
+      radius: 50,
     };
     this.longitudeChangeHandler = this.longitudeChangeHandler.bind(this);
     this.latitudeChangeHandler = this.latitudeChangeHandler.bind(this);
+    this.radiusChangeHandler = this.radiusChangeHandler.bind(this);
+    this.selectedOptionChangeHandler =
+      this.selectedOptionChangeHandler.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
   longitudeChangeHandler = (e) => {
@@ -24,13 +29,25 @@ class Home extends Component {
       latitude: e.target.value,
     });
   };
+  radiusChangeHandler = (e) => {
+    this.setState({
+      radius: e.target.value,
+    });
+  };
+  selectedOptionChangeHandler = (e) => {
+    this.setState({
+      selectedOption: e.target.value,
+    });
+  };
   submitForm = (e) => {
     e.preventDefault();
     const data = {
       longitude: this.state.longitude,
       latitude: this.state.latitude,
+      radius: this.state.radius,
+      selectedOption: this.state.selectedOption,
     };
-    axios.post("/tweets/search/likes", data).then((response) => {
+    axios.post("/tweets/search", data).then((response) => {
       if (response) {
         console.log(response.data);
         this.setState({ tweets: response.data });
@@ -39,35 +56,84 @@ class Home extends Component {
       }
     });
   };
-  componentDidMount() {
-    axios.get("/tweets/all").then((response) => {
-      if (response) {
-        console.log(response.data);
-        this.setState({ tweets: response.data });
-      } else {
-        console.log("Error retrieving Tweets");
-      }
-    });
-  }
+  //componentDidMount() {
+  //axios.get("/tweets/all").then((response) => {
+  // if (response) {
+  //  console.log(response.data);
+  // this.setState({ tweets: response.data });
+  //} else {
+  //  console.log("Error retrieving Tweets");
+  // }
+  //});
+  //}
 
   render() {
     return (
       <div>
-        <h2>
-          This page display the map and top ten tweets for the given coordiantes
-          are displayed{" "}
-        </h2>
+        <h4>ENTER COORDINATES AND THE PROGRAM WILL RETURN TOP 10 TWEETS</h4>
         <div>
           <form onSubmit={this.submitForm}>
+            <div class="form-check form-check-inline">
+              <input
+                id="inLineRadio1"
+                type="radio"
+                name="sortType"
+                value="likes"
+                checked={this.state.selectedOption === "likes"}
+                onChange={this.selectedOptionChangeHandler}
+                class="form-check-input"
+              />
+              <label class="form-check-label" for="inLineRadio1">
+                Likes
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                id="inLineRadio2"
+                type="radio"
+                name="sortType"
+                value="reply"
+                checked={this.state.selectedOption === "reply"}
+                onChange={this.selectedOptionChangeHandler}
+                class="form-check-input"
+              />
+              <label class="form-check-label" for="inLineRadio2">
+                Replies
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                id="inLineRadio3"
+                type="radio"
+                name="sortType"
+                value="retweets"
+                checked={this.state.selectedOption === "retweets"}
+                onChange={this.selectedOptionChangeHandler}
+                class="form-check-input"
+              />
+              <label class="form-check-label" for="inLineRadio3">
+                Retweets
+              </label>
+            </div>
+            <br />
+            Longitude:
             <input
               onChange={this.longitudeChangeHandler}
               type="text"
               name="longitude"
             />
+            Latitude:
             <input
               onChange={this.latitudeChangeHandler}
               type="text"
               name="latitude"
+            />
+            Radius (miles):
+            <input
+              onChange={this.radiusChangeHandler}
+              type="text"
+              name="radius"
+              style={{ width: "5%" }}
             />
             <button type="submit" class="btn btn-primary">
               Search
@@ -77,12 +143,30 @@ class Home extends Component {
           {this.state.tweets.map((tweet) => {
             return (
               <div>
-                {tweet.date}
-                {tweet.rawContent}
-                <p>like count</p>
-                {tweet.likeCount}
-                <p>retweet count</p>
-                {tweet.likeCount}
+                <p>
+                  <b>DATE: </b>
+                  {tweet.date}
+                </p>
+
+                <p>
+                  <b>USER PROFILE INFO: </b>
+                  {tweet.user}
+                </p>
+                <p>
+                  <b>TWEET: </b>
+                  {tweet.rawContent}
+                </p>
+                <p>
+                  <b>LIKES: </b>
+                  {tweet.likeCount}
+                </p>
+                <p>
+                  <b>RETWEETS: </b> {tweet.retweetCount}
+                </p>
+                <p>
+                  {" "}
+                  <b>REPLIES: </b> {tweet.replyCount}
+                </p>
               </div>
             );
           })}
