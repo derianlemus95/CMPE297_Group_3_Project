@@ -50,7 +50,7 @@ class Home extends Component {
       radius: this.state.radius,
       selectedOption: this.state.selectedOption,
     };
-    axios.post("/tweets/search", data).then((response) => {
+    axios.post("/tweets/updatedSearch", data).then((response) => {
       if (response) {
         console.log(response.data);
         this.setState({ tweets: response.data });
@@ -158,8 +158,8 @@ class Home extends Component {
                         likes: tweet.likeCount,
                       }}
                       author={{
-                        name: "Elon Musk",
-                        username: "realElon",
+                        name: tweet.username,
+                        username: tweet.displayname,
                         image: "https://twitter.com/elonmusk/photo",
                       }}
                       tweet={tweet.renderedContent}
